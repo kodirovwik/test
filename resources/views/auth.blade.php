@@ -20,6 +20,7 @@
             </label>
             <button type="submit">Войти</button>
         </div>
+        <a href="/create-default-user">Создать дефолтного пользователя</a>
         @if($errors->any())
             <ul style="color:red;">
                 @foreach($errors->all() as $error)

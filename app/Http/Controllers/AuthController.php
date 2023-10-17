@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -36,6 +38,27 @@ class AuthController extends Controller
         auth()->logout();
 
         return redirect('/');
+    }
+
+    public function createDefaultUser()
+    {
+        $userExists = User::query()
+            ->where('name', 'admin')
+            ->exists();
+
+        if ($userExists) {
+            return redirect()->back()->withErrors(['result' => 'Дефолтный пользователь уже существует. Имя пользователя: admin, Пароль: admin']);
+        }
+
+        $user = new User();
+
+        $user->name = 'admin';
+        $user->email = 'admin@admin.ru';
+        $user->password = Hash::make('admin');
+
+        $user->save();
+
+        return redirect()->back()->withErrors(['result' => 'Дефолтный пользователь создан. Имя пользователя: admin, Пароль: admin']);
     }
 
     private function validateRequest(Request $request): array

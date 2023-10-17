@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [AuthController::class, 'index'])->name('auth_view');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/create-default-user', [AuthController::class, 'createDefaultUser']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/download', [DownloadController::class, 'index'])->name('download_index');
